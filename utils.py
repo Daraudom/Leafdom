@@ -82,7 +82,7 @@ def visualize_pca_clusters(pca_data, cluster_labels, output_file):
     None
     """
     plt.figure(figsize=(10, 7))
-    scatter = plt.scatter(pca_data[:, 0], pca_data[:, 1], c=cluster_labels, cmap='viridis', marker='o', s=10)
+    scatter = plt.scatter(pca_data[:, 0], pca_data[:, 1], c=cluster_labels, cmap='viridis', marker='o', s=3)
     plt.xlabel('Principal Component 1')
     plt.ylabel('Principal Component 2')
     plt.title('PCA of scRNA-seq Data')
