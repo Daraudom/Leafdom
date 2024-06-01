@@ -1,27 +1,23 @@
-# leafdom.py
 import argparse
-import numpy as np
-from utils import UMAP
+import anndata as ad
+from utils import preprocess_anndata, compute_pca, cluster_data, visualize_pca_clusters
 
-def main():
-    parser = argparse.ArgumentParser(description='Run UMAP dimensionality reduction.')
-    parser.add_argument('--input', type=str, required=True, help='Path to the input CSV file.')
-    parser.add_argument('--output', type=str, required=True, help='Path to the output CSV file.')
-    parser.add_argument('--n_neighbors', type=int, default=15, help='Number of nearest neighbors (default: 15).')
-    parser.add_argument('--min_dist', type=float, default=0.1, help='Minimum distance between points in the low-dimensional space (default: 0.1).')
-    parser.add_argument('--n_epochs', type=int, default=200, help='Number of training epochs (default: 200).')
-    parser.add_argument('--n_components', type=int, default=2, help='Number of dimensions in the output (default: 2).')
+def main(input_path, output_file, method='dbscan', k=2, eps=0.5, min_samples=10, n_clusters=3):
+    adata = ad.read_h5ad(input_path)
+    data = preprocess_anndata(adata)
+    pca_data = compute_pca(data, n_components=k)
+    cluster_labels = cluster_data(pca_data, method=method, eps=eps, min_samples=min_samples, n_clusters=n_clusters)
+    visualize_pca_clusters(pca_data, cluster_labels, output_file)
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="LeafDom: A tool for scRNA-seq data preprocessing, PCA, clustering, and visualization.")
+    parser.add_argument('-i', '--input', required=True, help="Path to the input anndata file (h5ad format).")
+    parser.add_argument('-o', '--output_file', required=True, help="Path to the output file for the PCA plot.")
+    parser.add_argument('-m', '--method', choices=['dbscan', 'kmeans'], default='dbscan', help="Clustering method (default: dbscan).")
+    parser.add_argument('-k', '--components', type=int, default=2, help="Number of principal components to select for PCA (default: 2).")
+    parser.add_argument('-e', '--eps', type=float, default=0.5, help="Maximum distance between two samples for DBSCAN (default: 0.5).")
+    parser.add_argument('-s', '--min_samples', type=int, default=10, help="Number of samples in a neighborhood for a point to be considered as a core point in DBSCAN (default: 10).")
+    parser.add_argument('-c', '--clusters', type=int, default=3, help="Number of clusters to form for k-means (default: 3).")
+    
     args = parser.parse_args()
-
-    # Load the input data
-    data = np.loadtxt(args.input, delimiter=',')
-
-    # Run UMAP
-    embedding = UMAP(data, n=args.n_neighbors, d=args.n_components, min_dist=args.min_dist, n_epochs=args.n_epochs)
-
-    # Save the output
-    np.savetxt(args.output, embedding, delimiter=',')
-
-if __name__ == '__main__':
-    main()
+    main(args.input, args.output_file, args.method, args.components, args.eps, args.min_samples, args.clusters)

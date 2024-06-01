@@ -1,84 +1,89 @@
-# Leafdom
+# LeafDom
+---
 
-Leafdom is a command-line tool that implements the Uniform Manifold Approximation and Projection (UMAP) algorithm from scratch. UMAP is a dimension reduction technique that can be used for visualization and preserving structure in high-dimensional data. Leafdom allows users to easily apply UMAP to their datasets via the command line.
+LeafDom is a command-line tool for preprocessing, performing PCA, clustering, and visualizing single-cell RNA sequencing (scRNA-seq) data stored in an `anndata` object. It supports flexible analysis by allowing users to choose different clustering methods and visualize the clusters in PCA plots.
 
 ## Features
 
-- Implements UMAP from scratch
-- Supports various distance metrics
-- Allows easy integration into command-line workflows
-- Provides options for customizing the UMAP parameters
-- Outputs transformed data for visualization and further analysis
+- **Preprocessing**: Normalize, log-transform, and standardize scRNA-seq data.
+- **PCA**: Perform Principal Component Analysis for dimensionality reduction.
+- **Clustering**: Apply clustering algorithms (DBSCAN or k-means).
+- **Visualization**: Visualize clusters in PCA plots and save the plots to specified output files.
+
+## Requirements
+
+- Python 3.x
+- `numpy`
+- `matplotlib`
+- `anndata`
+- `scikit-learn`
 
 ## Installation
 
-Clone the repository:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/yourusername/LeafDom.git
+   cd LeafDom
+   ```
 
-```bash
-git clone https://github.com/yourusername/leafdom.git
-cd leafdom
-```
-
-Install the required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
+2. **Install the required Python packages**:
+   ```bash
+   pip install numpy matplotlib anndata scikit-learn
+   ```
 
 ## Usage
 
-To use Leafdom, run the following command with your dataset:
+### Command Line Arguments
+
+#### Necessary Parameters
+
+- `-i, --input`: Path to the input anndata file (h5ad format).
+- `-o, --output_file`: Path to the output file for the PCA plot.
+
+#### Optional Parameters
+
+- `-m, --method`: Clustering method (`dbscan` or `kmeans`). Default is `dbscan`.
+- `-k, --components`: Number of principal components to select for PCA. Default is `2`.
+- `-e, --eps`: Maximum distance between two samples for DBSCAN. Default is `0.5`.
+- `-s, --min_samples`: Number of samples in a neighborhood for a point to be considered as a core point in DBSCAN. Default is `10`.
+- `-c, --clusters`: Number of clusters to form for k-means. Default is `3`.
+
+### Clustering Methods
+
+#### K-means
+
+- **Description**: K-means clustering partitions the data into `k` clusters by minimizing the variance within each cluster.
+- **Advantages**: Simple and fast; works well when clusters are spherical and equally sized.
+- **Disadvantages**: Requires the number of clusters (`k`) to be specified beforehand; sensitive to outliers; assumes clusters are spherical.
+
+#### DBSCAN
+
+- **Description**: DBSCAN (Density-Based Spatial Clustering of Applications with Noise) clustering groups points that are closely packed together and marks as outliers points that lie alone in low-density regions.
+- **Advantages**: Does not require the number of clusters to be specified; can find arbitrarily shaped clusters; robust to outliers.
+- **Disadvantages**: Parameters `eps` (maximum distance) and `min_samples` (minimum number of points) need to be chosen carefully; may struggle with varying densities.
+
+## Running the Tool
+
+### Step-by-Step Instructions
+
+1. **Prepare Your Data**:
+   - Ensure your scRNA-seq data is stored in an `anndata` object and saved in h5ad format.
+
+2. **Run the tool from the command line** with the appropriate arguments.
 
 ```bash
-python leafdom.py --input data.csv --output transformed_data.csv --n_neighbors 15 --min_dist 0.1 --metric euclidean
+python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -k 2 -e 0.5 -s 10
 ```
-
-### Command-Line Options
-
-- `--input`: Path to the input dataset (CSV file).
-- `--output`: Path to the output transformed dataset (CSV file).
-- `--n_neighbors`: The size of local neighborhood (in terms of number of neighboring sample points) used for manifold approximation. (default: 15)
-- `--min_dist`: The effective minimum distance between embedded points. Smaller values will result in a more clustered/clumped embedding. (default: 0.1)
-- `--metric`: The metric to use for measuring distance in the input space. (default: euclidean)
-
-## Examples
-
-### Basic Usage
-
-Transform a dataset with default parameters:
-
-```bash
-python leafdom.py --input mydata.csv --output mytransformeddata.csv
-```
-
-### Custom Parameters
-
-Transform a dataset with custom parameters for `n_neighbors` and `min_dist`:
-
-```bash
-python leafdom.py --input mydata.csv --output mytransformeddata.csv --n_neighbors 10 --min_dist 0.2
-```
-
-## Development
-
-To contribute to Leafdom, follow these steps:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-branch`.
-3. Make your changes and commit them: `git commit -m 'Add some feature'`.
-4. Push to the branch: `git push origin feature-branch`.
-5. Submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-- UMAP: Uniform Manifold Approximation and Projection by Leland McInnes, John Healy, and James Melville.
-
-## Contact
-
-For any questions or suggestions, please contact [your email address].
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
+
+
+functions include:
+<!-- - preprocessing (normalization and log transformation)
+- selecting highly variable genes -> new adata object with only the highest variable genes (select top n genes) -->
+- performing PCA on the new data
+- visualize the PCA plots using either k-means or DBscans
