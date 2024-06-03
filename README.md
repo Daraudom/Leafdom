@@ -35,6 +35,11 @@ We hope to implement more clustering methods in the near future such as `t-sne` 
 
 ## Usage
 
+### Basic Usage
+
+```bash
+python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png
+```
 ### Command Line Arguments
 
 #### Necessary Parameters
