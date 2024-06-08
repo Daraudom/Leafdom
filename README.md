@@ -59,11 +59,19 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png
 
 #### K-means
 
+```bash
+python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m kmeans -c <numer of clusters> -k <number of PCs>
+```
+
 - **Description**: K-means clustering partitions the data into `k` clusters by minimizing the variance within each cluster.
 - **Advantages**: Simple and fast; works well when clusters are spherical and equally sized.
 - **Disadvantages**: Requires the number of clusters (`k`) to be specified beforehand; sensitive to outliers; assumes clusters are spherical.
 
 #### DBSCAN
+
+```bash
+python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -eps <max distance between two samples> -s <min-samples in neighborhood> -k <number of PCs>
+```
 
 - **Description**: DBSCAN (Density-Based Spatial Clustering of Applications with Noise) clustering groups points that are closely packed together and marks as outliers points that lie alone in low-density regions.
 - **Advantages**: Does not require the number of clusters to be specified; can find arbitrarily shaped clusters; robust to outliers.
@@ -141,3 +149,10 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -k 2
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
+
+
+functions include:
+<!-- - preprocessing (normalization and log transformation)
+- selecting highly variable genes -> new adata object with only the highest variable genes (select top n genes) -->
+- performing PCA on the new data
+- visualize the PCA plots using either k-means or DBscans
