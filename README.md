@@ -3,7 +3,7 @@
 
 LeafDom is a command-line tool for preprocessing, performing PCA, clustering, and visualizing single-cell RNA sequencing (scRNA-seq) data stored in an `anndata` object. It supports flexible analysis by allowing users to choose different clustering methods (k-means and DBSCAN) and visualize the clusters in PCA plots. This project is inspired by the PCA clustering tools in `scanpy`.
 
-We hope to implement more clustering methods in the near future such as `t-sne` and `UMAP`..
+We hope to implement more clustering methods in the near future such as `t-sne` and `UMAP`.
 
 ## Features
 
@@ -62,7 +62,7 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png
 
 ### Clustering Methods
 
-#### K-means
+#### K-means (Highly Recommended!)
 
 ```bash
 python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m kmeans -c <numer of clusters> -k <number of PCs>
@@ -72,7 +72,7 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m kmeans -c <
 - **Advantages**: Simple and fast; works well when clusters are spherical and equally sized.
 - **Disadvantages**: Requires the number of clusters (`k`) to be specified beforehand; sensitive to outliers; assumes clusters are spherical.
 
-#### DBSCAN
+#### DBSCAN (Beta Version)
 
 ```bash
 python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -eps <max distance between two samples> -s <min-samples in neighborhood> -k <number of PCs>
