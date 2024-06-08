@@ -24,7 +24,7 @@ We hope to implement more clustering methods in the near future such as `t-sne` 
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/LeafDom.git
+   git clone https://github.com/Daraudom/LeafDom.git
    cd LeafDom
    ```
 
@@ -32,6 +32,11 @@ We hope to implement more clustering methods in the near future such as `t-sne` 
    ```bash
    pip install numpy matplotlib anndata scikit-learn
    ```
+3. **Check to see if the tool is working**
+   ```bash
+   python leafdom.py --help
+   ```
+   Use `--help` to print out some helpful statements on how to operate Leafdom.
 
 ## Usage
 
