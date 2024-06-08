@@ -3,7 +3,7 @@
 
 LeafDom is a command-line tool for preprocessing, performing PCA, clustering, and visualizing single-cell RNA sequencing (scRNA-seq) data stored in an `anndata` object. It supports flexible analysis by allowing users to choose different clustering methods (k-means and DBSCAN) and visualize the clusters in PCA plots. This project is inspired by the PCA clustering tools in `scanpy`.
 
-We hope to implement more clustering methods in the near future such as `t-sne` and `UMAP`.
+We hope to implement more clustering methods in the near future such as `t-sne` and `UMAP`..
 
 ## Features
 
