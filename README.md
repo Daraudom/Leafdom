@@ -141,10 +141,3 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -k 2
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
-
-
-functions include:
-<!-- - preprocessing (normalization and log transformation)
-- selecting highly variable genes -> new adata object with only the highest variable genes (select top n genes) -->
-- performing PCA on the new data
-- visualize the PCA plots using either k-means or DBscans

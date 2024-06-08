@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
 def preprocess_anndata(adata):
     """
@@ -160,7 +161,34 @@ def cluster_data(pca_data, method='dbscan', eps=0.5, min_samples=10, n_clusters=
         raise ValueError("Unsupported clustering method. Choose 'dbscan' or 'kmeans'.")
     return cluster_labels
 
-def visualize_pca_clusters(pca_data, cluster_labels, output_file):
+# def identify_marker_genes(adata, cluster_labels, top_n=3):
+#     """
+#     Identify marker genes for each cluster.
+    
+#     Parameters:
+#     adata (anndata.AnnData): Annotated data object containing the scRNA-seq data.
+#     cluster_labels (np.ndarray): Cluster labels for each data point.
+#     top_n (int): Number of top marker genes to select for each cluster.
+    
+#     Returns:
+#     dict: Dictionary with cluster labels as keys and list of marker genes as values.
+#     """
+#     markers = {}
+#     unique_clusters = np.unique(cluster_labels)
+    
+#     var_names = np.array(adata.var_names)  # Convert to numpy array
+    
+#     for cluster in unique_clusters:
+#         if cluster == -1:
+#             continue  # Skip noise points
+#         cluster_data = adata[cluster_labels == cluster].X
+#         mean_expression = np.mean(cluster_data, axis=0)
+#         top_genes_idx = np.argsort(mean_expression)[::-1][:top_n]
+#         markers[cluster] = var_names[top_genes_idx].tolist()
+    
+#     return markers
+
+def visualize_pca_clusters(pca_data, cluster_labels, adata, output_file):
     """
     Visualize the clusters in the PCA-transformed data with different colors and save the plot to a file.
     
@@ -172,6 +200,9 @@ def visualize_pca_clusters(pca_data, cluster_labels, output_file):
     Returns:
     None
     """
+    # Identify marker genes for each cluster
+   # markers = identify_marker_genes(adata, cluster_labels, top_n=3)
+
     plt.figure(figsize=(10, 7))
     scatter = plt.scatter(pca_data[:, 0], pca_data[:, 1], c=cluster_labels, cmap='viridis', marker='o', s=3)
     plt.xlabel('Principal Component 1')
@@ -185,6 +216,11 @@ def visualize_pca_clusters(pca_data, cluster_labels, output_file):
             # Skip labeling for noise points in DBSCAN (cluster label -1)
             continue
         centroid = pca_data[cluster_labels == cluster].mean(axis=0)
+
+        # marker_genes = ", ".join(map(str, markers[cluster][:1]))  # added
+        # plt.text(centroid[0], centroid[1], marker_genes, fontsize=8, weight='bold', color='white', ha='center', va='center', 
+        #          bbox=dict(facecolor='black', alpha=0.5, edgecolor='none', boxstyle='round,pad=0.3'))
+
         plt.text(centroid[0], centroid[1], str(cluster + 1), fontsize=12, weight='bold', color='white', ha='center', va='center', 
                  bbox=dict(facecolor='black', alpha=0.5, edgecolor='none', boxstyle='round,pad=0.3'))
         
