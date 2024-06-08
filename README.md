@@ -62,7 +62,7 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png
 
 ### Clustering Methods
 
-#### K-means
+#### K-means (Recommended Clustering Method!)
 
 ```bash
 python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m kmeans -c <numer of clusters> -k <number of PCs>
@@ -72,7 +72,7 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m kmeans -c <
 - **Advantages**: Simple and fast; works well when clusters are spherical and equally sized.
 - **Disadvantages**: Requires the number of clusters (`k`) to be specified beforehand; sensitive to outliers; assumes clusters are spherical.
 
-#### DBSCAN
+#### DBSCAN (Beta Version)
 
 ```bash
 python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -eps <max distance between two samples> -s <min-samples in neighborhood> -k <number of PCs>
