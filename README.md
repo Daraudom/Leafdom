@@ -82,6 +82,8 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png -m dbscan -eps
 - **Advantages**: Does not require the number of clusters to be specified; can find arbitrarily shaped clusters; robust to outliers.
 - **Disadvantages**: Parameters `eps` (maximum distance) and `min_samples` (minimum number of points) need to be chosen carefully; may struggle with varying densities.
 
+DBSCAN is not perfect yet as it is unable handle large data sets with higher PC computation to produce a conclusive cluster. We highly recommend users to stick with K-means.
+
 ## Running the Tool
 
 ### Step-by-Step Instructions
