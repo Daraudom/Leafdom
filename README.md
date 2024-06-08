@@ -49,7 +49,7 @@ python leafdom.py -i path_to_your_anndata.h5ad -o output_plot.png
 
 #### Optional Parameters
 
-- `-m, --method`: Clustering method (`dbscan` or `kmeans`). Default is `dbscan`.
+- `-m, --method`: Clustering method (`dbscan` or `kmeans`). Default is `kmeans`.
 - `-k, --components`: Number of principal components to select for PCA. Default is `2`.
 - `-e, --eps`: Maximum distance between two samples for DBSCAN. Default is `0.5`.
 - `-s, --min_samples`: Number of samples in a neighborhood for a point to be considered as a core point in DBSCAN. Default is `10`.
